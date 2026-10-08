@@ -5,7 +5,7 @@ const path = require('path');
 module.exports.config = {
   name: "time",
   version: "11.0",
-  author: "MOHAMMAD AKASH",
+  author: "nabin",
   countDown: 5,
   role: 0,
   shortDescription: "Calendar up time card",
@@ -19,16 +19,16 @@ module.exports.onStart = async function ({ api, event, args }) {
   try {
     // === Dhaka Time (GMT+6) ===
     const now = new Date();
-    const dhakaOffset = 6 * 60 * 60 * 1000;
-    const dhakaTime = new Date(now.getTime() + dhakaOffset);
+    const kathmanduOffset = 6 * 60 * 60 * 1000;
+    const KathmanduTime = new Date(now.getTime() + KathmanduOffset);
 
-    const year = dhakaTime.getFullYear();
-    const month = dhakaTime.getMonth();
-    const date = dhakaTime.getDate();
-    const day = dhakaTime.getDay();
-    let hours = dhakaTime.getHours();
-    const minutes = dhakaTime.getMinutes();
-    const seconds = dhakaTime.getSeconds();
+    const year = KathmanduTime.getFullYear();
+    const month = KathmanduTime.getMonth();
+    const date = KathmanduTime.getDate();
+    const day = KathmanduTime.getDay();
+    let hours = KathmanduTime.getHours();
+    const minutes = KathmanduTime.getMinutes();
+    const seconds = KathmanduTime.getSeconds();
 
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
