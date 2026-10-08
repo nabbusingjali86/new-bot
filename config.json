@@ -1,7 +1,7 @@
 {
   "facebookAccount": {
-    "email": "",
-    "password": "",
+    "email": "nabinmgrx42@gmail.com",
+    "password": "@mine123456#",
     "2FASecret": "",
     "i_user": "",
     "proxy": null,
@@ -12,7 +12,7 @@
   "antiInbox": false,
   "language": "en",
   "notesLanguage": "change language using ISO 639-1 code",
-  "nickNameBot": "𝙃𝙞𝙣𝙖𝙏'𝙖 𝙐𝙯𝙪𝙢𝙖𝙆'𝙞𝙞 ᯓᡣ𐭩",
+  "nickNameBot": "personal Bot",
   "prefix": "/",
   "enableTypingIndicator": true,
   "typingDuration": 2000,
@@ -30,16 +30,14 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61592832917083",
-    " ",
-    " "
+    "100087555698178"
   ],
   "reactUnsend": {
     "enable": true,
     "onlyAdmin": true,
     "emojis": [
       "😡",
-      "🤬"
+      "😠"
     ],
     "notes": "If enable = true, bot will unsend any message reacted with these emojis. If onlyAdmin = true, only adminBot IDs can trigger it."
   },
@@ -57,13 +55,13 @@
     "notes": "If enabled, only threads in whiteListThreadIds can use the bot."
   },
   "database": {
-    "type": "sqlite",
-    "uriMongodb": "mongodb+srv://eryxenxdb:eryxenxdbgoatv2@cluster0.523a3n0.mongodb.net/?appName=Cluster0",
+    "type": "mongodb",
+    "uriMongodb": "mongodb+srv://nabbusingjali86_db_user:5Ls49uDgDjj0V9Gr@cluster0.la2pojs.mongodb.net/?appName=Cluster0",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
     "notes": "Recommended using 'mongodb' or 'sqlite'."
   },
-  "timeZone": "Asia/Dhaka",
+  "timeZone": "Asia/kathmandu",
   "credentials": {
     "gmailAccount": {
       "email": "botofnexxo@gmail.com",
