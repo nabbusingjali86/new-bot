@@ -5,9 +5,9 @@ const path = require("path");
 module.exports = {
   config: {
     name: "owner",
-    version: "1.3.0",
-    author: "Mᴏʜᴀᴍᴍᴀᴅ Aᴋᴀsʜ",
-    role: 0,
+    version: "2.0.7",
+    author: "Nabin", 
+    noprefix: "true",
     shortDescription: "Owner information with image",
     category: "Information",
     guide: {
@@ -18,40 +18,38 @@ module.exports = {
   onStart: async function ({ api, event }) {
     const ownerText = 
 `╭─ 👑 Oᴡɴᴇʀ Iɴғᴏ 👑 ─╮
-│ 👤 Nᴀᴍᴇ       : Mᴏʜᴀᴍᴍᴀᴅ Aᴋᴀsʜ
-│ 🧸 Nɪᴄᴋ       : Aᴋᴀsʜ
-│ 🎂 Aɢᴇ        : 18+
+│ 👤 Nᴀᴍᴇ       : Nabin Singjali Magar
+│ 🧸 Nɪᴄᴋ       : Nabbu 
+│ 🎂 Aɢᴇ        : 18
 │ 💘 Rᴇʟᴀᴛɪᴏɴ : Sɪɴɢʟᴇ
 │ 🎓 Pʀᴏғᴇssɪᴏɴ : Sᴛᴜᴅᴇɴᴛ
-│ 📚 Eᴅᴜᴄᴀᴛɪᴏɴ : Iɴᴛᴇʀ 2ɴᴅ Yᴇᴀʀ
-│ 🏡 Lᴏᴄᴀᴛɪᴏɴ : 𝐃𝐡𝐚𝐤𝐚 - 𝐆𝐚𝐳𝐢𝐩𝐮𝐫
+│ 📚 Eᴅᴜᴄᴀᴛɪᴏɴ : 12
+│ 🏡 Lᴏᴄᴀᴛɪᴏɴ : Nepal palpa 
 ├─ 🔗 Cᴏɴᴛᴀᴄᴛ ─╮
-│ 📘 Facebook  : fb.com/akashx404 
-│ 💬 Messenger: m.me/akashx404 
-│ 📞 WhatsApp  : wa.me/01933165880
+│ 📘 Facebook  : https://www.facebook.com/nabin.mgrx.237081.
 ╰────────────────╯`;
 
     const cacheDir = path.join(__dirname, "cache");
-    const imgPath = path.join(cacheDir, "owner.jpg");
+    const mp4Path = path.join(cacheDir, "owner.mp4");
 
     if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir);
 
-    const imgLink = "https://i.imgur.com/1G4ZhU7.jpeg";
+    const mp4Link = "https://i.imgur.com/91u1cpz.mp4";
 
     const send = () => {
       api.sendMessage(
         {
           body: ownerText,
-          attachment: fs.createReadStream(imgPath)
+          attachment: fs.createReadStream(mp4Path)
         },
         event.threadID,
-        () => fs.unlinkSync(imgPath),
+        () => fs.unlinkSync(mp4Path),
         event.messageID
       );
     };
 
-    request(encodeURI(imgLink))
-      .pipe(fs.createWriteStream(imgPath))
+    request(encodeURI(mp4Link))
+      .pipe(fs.createWriteStream(mp4Path))
       .on("close", send);
   }
 };
