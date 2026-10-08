@@ -9,7 +9,7 @@ module.exports = {
     config: {
         name: "autolink",
         version: "3.0.0",
-        author: "EryXenX",
+        author: "nabin",
         countDown: 5,
         role: 0,
         shortDescription: "Auto-download & send videos silently (no messages)",
