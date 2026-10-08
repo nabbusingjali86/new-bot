@@ -848,7 +848,7 @@ module.exports = {
     name: "up",
     aliases: ["uptime", "status", "sysinfo"],
     version: "3.0",
-    author: "MOHAMMAD AKASH",
+    author: "nabin",
     role: 0,
     category: "system",
     shortDescription: "Display system status in Windows 11 style"
