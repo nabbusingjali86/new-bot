@@ -104,7 +104,7 @@ module.exports = {
       fs.writeFileSync(bgPath, finalBuffer);
 
       await message.reply({
-        body: "😎 হ্যাক সম্পূর্ণ!",
+        body: "😎 complete hack!",
         attachment: fs.createReadStream(bgPath)
       });
 
