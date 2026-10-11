@@ -12,7 +12,7 @@
   "antiInbox": false,
   "language": "en",
   "notesLanguage": "change language using ISO 639-1 code",
-  "nickNameBot": "personal Bot",
+  "nickNameBot": "GOJO SATURO",
   "prefix": "/",
   "enableTypingIndicator": true,
   "typingDuration": 2000,
@@ -55,7 +55,7 @@
     "notes": "If enabled, only threads in whiteListThreadIds can use the bot."
   },
   "database": {
-    "type": "mongodb",
+    "type": "sqlite",
     "uriMongodb": "mongodb+srv://nabbusingjali86_db_user:5Ls49uDgDjj0V9Gr@cluster0.la2pojs.mongodb.net/?appName=Cluster0",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
@@ -110,7 +110,7 @@
   "autoRestartWhenListenMqttError": true,
   "restartListenMqtt": {
     "enable": false,
-    "timeRestart": 3600000,
+    "timeRestart": 360000,
     "delayAfterStopListening": 2000,
     "logNoti": true,
     "notes": "Restart listener every 1 hour."
@@ -157,7 +157,7 @@
     "updatePresence": true,
     "listenTyping": true,
     "logLevel": "error",
-    "selfListen": false,
+    "selfListen": true,
     "selfListenEvent": true,
     "autoMarkDelivery": false,
     "autoReconnect": true,
