@@ -501,4 +501,117 @@ module.exports = {
         .filter(u => u.data?.goatai_pet?.pet)
         .map(u => ({
           name: u.name || "Tamer",
-          petName: u.data.
+          petName: u.data.goatai_pet.pet.name,
+          level: u.data.goatai_pet.pet.level,
+          wins: u.data.goatai_pet.stats?.wins || 0,
+          rank: u.data.goatai_pet.pet.rank || "Novice"
+        }))
+        .sort((a, b) => b.level !== a.level ? b.level - a.level : b.wins - a.wins)
+        .slice(0, 10);
+
+      if (petHolders.length === 0) {
+        return message.reply("🏆 No pet masters registered yet!");
+      }
+
+      let lb = "🏆 ══════ TOP BEASTMASTERS LEADERBOARD ══════ 🏆\n";
+      petHolders.forEach((p, i) => {
+        lb += `${i + 1}. ${p.name} & 「${p.petName}」 - Lv.${p.level} | ${p.wins} Wins | ${p.rank}\n`;
+      });
+      return message.reply(lb);
+    }
+
+    // Default: Display Dashboard
+    const profile = renderPetCard(state, state.pet, balance);
+    const dashboardGuide =
+      `\n\n🎮 Available Commands:\n` +
+      `• ${prefix}pet shop - Buy items & gear\n` +
+      `• ${prefix}pet care - Use items to heal & feed\n` +
+      `• ${prefix}pet daily - Collect gold & rations\n` +
+      `• ${prefix}pet train [atk/def] - Increase stats\n` +
+      `• ${prefix}pet bond - Emotional care & karma\n` +
+      `• ${prefix}pet adventure - Explore dungeons\n` +
+      `• ${prefix}pet pray - Spiritual sanctuary healing\n` +
+      `• ${prefix}pet battle - Arena matchmaking`;
+
+    return message.reply(profile + dashboardGuide);
+  },
+
+  onReply: async function ({ api, event, Reply, message, usersData }) {
+    const { senderID, body, messageID } = event;
+    const session = activeSessions.get(Reply.messageID);
+    if (!session) return;
+
+    if (Date.now() > session.expiresAt) {
+      activeSessions.delete(Reply.messageID);
+      return message.reply("⌛ Session timed out. Please run the command again.");
+    }
+
+    if (senderID !== session.authorId) {
+      return message.reply("⚠️ You are not the owner of this pet session.");
+    }
+
+    const userData = await usersData.get(senderID);
+    const state = getOrCreatePetState(userData);
+    const balance = userData.money || 0;
+
+    if (session.type === "SHOP_BUY") {
+      const parts = body.trim().split(/\s+/);
+      const choice = parseInt(parts[0], 10);
+      const qty = Math.max(1, parseInt(parts[1], 10) || 1);
+
+      if (isNaN(choice) || choice < 1 || choice > session.indexMap.length) {
+        return message.reply("❌ Invalid choice. Reply with item number and optional quantity (e.g., '1 2').");
+      }
+
+      const itemKey = session.indexMap[choice - 1];
+      const item = SHOP_ITEMS[itemKey];
+      const totalCost = item.cost * qty;
+
+      if (balance < totalCost) {
+        return message.reply(`❌ You do not have enough coins! Total cost: ${totalCost.toLocaleString()} Coins (You have: ${balance.toLocaleString()}).`);
+      }
+
+      state.inventory[itemKey] = (state.inventory[itemKey] || 0) + qty;
+      await usersData.set(senderID, {
+        money: balance - totalCost,
+        data: { ...userData.data, goatai_pet: state }
+      });
+
+      activeSessions.delete(Reply.messageID);
+      return message.reply(`✅ Purchased ${qty}x ${item.icon} ${item.name} for ${totalCost.toLocaleString()} coins!\nSupplies added to your inventory.`);
+    }
+
+    if (session.type === "CARE_USE") {
+      const choice = parseInt(body.trim(), 10);
+      if (isNaN(choice) || choice < 1 || choice > session.invKeys.length) {
+        return message.reply("❌ Invalid selection. Reply with the number of the item you want to use.");
+      }
+
+      const itemKey = session.invKeys[choice - 1];
+      const owned = state.inventory[itemKey] || 0;
+      if (owned <= 0) {
+        return message.reply("❌ You do not have any of this item left.");
+      }
+
+      const item = SHOP_ITEMS[itemKey];
+      state.inventory[itemKey] -= 1;
+
+      if (item.hunger) state.pet.hunger = clamp(state.pet.hunger + item.hunger);
+      if (item.happiness) state.pet.happiness = clamp(state.pet.happiness + item.happiness);
+      if (item.energy) state.pet.energy = clamp(state.pet.energy + item.energy);
+      if (item.hp) state.pet.currentHp = clamp(state.pet.currentHp + item.hp, 0, getPetMaxHp(state.pet));
+
+      if (item.type === "gear") {
+        if (item.stat === "def") state.gear.collar = itemKey;
+        if (item.stat === "atk") state.gear.weapon = itemKey;
+      }
+
+      await usersData.set(senderID, {
+        data: { ...userData.data, goatai_pet: state }
+      });
+
+      activeSessions.delete(Reply.messageID);
+      return message.reply(`✨ You gave ${item.icon} ${item.name} to ${state.pet.name}!\nCondition restored.`);
+    }
+  }
+};
