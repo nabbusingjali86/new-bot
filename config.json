@@ -14,7 +14,7 @@
   "notesLanguage": "change language using ISO 639-1 code",
   "nickNameBot": "GOJO SATURO",
   "prefix": "/",
-  "enableTypingIndicator": true,
+  "enableTypingIndicator": false,
   "typingDuration": 2000,
   "notesTypingIndicator": "true = show 'is typing...' before every reply (more human-like, adds visible delay) | false = reply instantly, no typing shown",
   "noPrefix": {
@@ -107,9 +107,9 @@
   },
   "autoRefreshFbstate": true,
   "autoReloginWhenChangeAccount": false,
-  "autoRestartWhenListenMqttError": true,
+  "autoRestartWhenListenMqttError": false,
   "restartListenMqtt": {
-    "enable": false,
+    "enable": true,
     "timeRestart": 360000,
     "delayAfterStopListening": 2000,
     "logNoti": true,
